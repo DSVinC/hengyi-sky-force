@@ -1070,7 +1070,7 @@ function drawItem(item) {
     health:        { main: '#ff88aa', glow: '#cc4466', icon: '+' },  // 粉色 - 生命回复
     shield:        { main: '#44ff44', glow: '#22aa22', icon: 'S' }   // 绿色 - 防护罩
   };
-  const c = colors[item.type];
+  const c = colors[item.type] || { main: '#fff', glow: '#888', icon: '?' };
 
   // 光晕
   ctx.fillStyle = `rgba(${hexToRgb(c.main)},0.2)`;
@@ -2127,6 +2127,7 @@ function drawHUD() {
   ctx.fillText(`💣 x${bombs}`, 10, 55);
 
   // 武器等级
+  ctx.font = '14px Arial';
   ctx.fillStyle = '#ff4444';
   ctx.fillText(`🔫 威力:${weaponPower}`, 10, 78);
   ctx.fillStyle = '#ffaa00';
