@@ -1040,6 +1040,16 @@ function drawLaserFighter(x, y, hp, maxHp) {
 }
 
 // ============================================================
+// 辅助函数
+// ============================================================
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `${r},${g},${b}`;
+}
+
+// ============================================================
 // 绘制道具
 // ============================================================
 function drawItem(item) {
@@ -1049,18 +1059,21 @@ function drawItem(item) {
   const pulse = 1 + Math.sin(frameCount * 0.1) * 0.1;
   ctx.scale(pulse, pulse);
 
+  // 8种奖励的完整配色方案
   const colors = {
-    energy: { main: '#4af', glow: '#28f', icon: 'E' },
-    missile: { main: '#fa4', glow: '#f82', icon: 'M' },
-    shield: { main: '#4f4', glow: '#2a2', icon: 'S' },
-    bomb: { main: '#f44', glow: '#a22', icon: 'B' },
-    coin: { main: '#ff4', glow: '#aa2', icon: '$' },
-    health: { main: '#f8a', glow: '#f48', icon: '+' }
+    weapon_power:  { main: '#ff4444', glow: '#aa2222', icon: 'W' },  // 红色 - 武器威力
+    weapon_rate:   { main: '#ffaa00', glow: '#aa7700', icon: 'R' },  // 橙色 - 武器射速
+    weapon_count:  { main: '#ff8800', glow: '#aa5500', icon: 'N' },  // 深橙 - 武器弹数
+    missile_power: { main: '#cc44ff', glow: '#8822aa', icon: 'M' },  // 紫色 - 导弹威力
+    missile_rate:  { main: '#88aaff', glow: '#5577cc', icon: 'F' },  // 蓝色 - 导弹射速
+    missile_count: { main: '#4488ff', glow: '#2255cc', icon: 'C' },  // 深蓝 - 导弹数量
+    health:        { main: '#ff88aa', glow: '#cc4466', icon: '+' },  // 粉色 - 生命回复
+    shield:        { main: '#44ff44', glow: '#22aa22', icon: 'S' }   // 绿色 - 防护罩
   };
   const c = colors[item.type];
 
   // 光晕
-  ctx.fillStyle = `rgba(${item.type === 'weapon_power' ? '255,100,100' : item.type === 'weapon_rate' ? '255,200,100' : item.type === 'weapon_count' ? '255,150,50' : item.type === 'missile_power' ? '200,100,255' : item.type === 'missile_rate' ? '150,200,255' : item.type === 'missile_count' ? '100,150,255' : item.type === 'health' ? '255,136,170' : '50,255,50'},0.2)`;
+  ctx.fillStyle = `rgba(${hexToRgb(c.main)},0.2)`;
   ctx.beginPath();
   ctx.arc(0, 0, 14, 0, Math.PI * 2);
   ctx.fill();
@@ -1586,21 +1599,27 @@ function checkCollision(a, b, ra, rb) {
 }
 
 // 掉落道具
-// 掉落道具（8种）
+// 掉落道具（8种，加权分布）
 function dropItem(x, y) {
   if (dropCooldown > 0) return;
   dropCooldown = 60;
   const r = Math.random();
   let type;
-  if (r < 0.05) type = 'weapon_power';      // 武器威力升级
-  else if (r < 0.10) type = 'weapon_rate';   // 武器射速升级
-  else if (r < 0.15) type = 'weapon_count';  // 武器子弹数升级
-  else if (r < 0.20) type = 'missile_power'; // 导弹威力升级
-  else if (r < 0.25) type = 'missile_rate';  // 导弹射速升级
-  else if (r < 0.30) type = 'missile_count'; // 导弹数量升级
-  else if (r < 0.35) type = 'health';        // 生命回复
-  else if (r < 0.40) type = 'shield';        // 防护罩
-  else { dropCooldown = 0; return; }
+  if (r < 0.55) {
+    // 55% 概率掉落奖励
+    const dropRoll = Math.random();
+    if (dropRoll < 0.15) type = 'weapon_power';      // 15% - 武器威力
+    else if (dropRoll < 0.27) type = 'weapon_rate';   // 12% - 武器射速
+    else if (dropRoll < 0.37) type = 'weapon_count';  // 10% - 武器弹数
+    else if (dropRoll < 0.49) type = 'missile_power'; // 12% - 导弹威力
+    else if (dropRoll < 0.59) type = 'missile_rate';  // 10% - 导弹射速
+    else if (dropRoll < 0.67) type = 'missile_count'; // 8%  - 导弹数量
+    else if (dropRoll < 0.85) type = 'health';        // 18% - 生命回复
+    else type = 'shield';                              // 15% - 防护罩
+  } else {
+    dropCooldown = 0;
+    return;
+  }
 
   items.push({ x, y, type, vy: 1.5 });
 }
@@ -1834,12 +1853,12 @@ function update() {
         spawnBigExplosion(e.x - 30, e.y + 20);
         spawnBigExplosion(e.x + 30, e.y - 20);
         bossDefeated = true;
-        // Boss 掉落大量道具
+        // Boss 掉落大量道具（8种新奖励）
         for (let i = 0; i < 8; i++) {
           items.push({
             x: e.x + (Math.random() - 0.5) * 60,
             y: e.y + (Math.random() - 0.5) * 60,
-            type: ['energy', 'missile', 'shield', 'bomb', 'coin', 'health'][Math.floor(Math.random() * 6)],
+            type: ['weapon_power', 'weapon_rate', 'weapon_count', 'missile_power', 'missile_rate', 'missile_count', 'health', 'shield'][i],
             vy: 1.5
           });
         }
@@ -2107,13 +2126,21 @@ function drawHUD() {
   ctx.fillText(`💣 x${bombs}`, 10, 55);
 
   // 武器等级
-  ctx.fillStyle = '#4af';
-  ctx.fillText(`武器 威力:${weaponPower} 射速:${weaponFireRate} 弹数:${weaponBulletCount + 1}`, 10, 78);
+  ctx.fillStyle = '#ff4444';
+  ctx.fillText(`🔫 威力:${weaponPower}`, 10, 78);
+  ctx.fillStyle = '#ffaa00';
+  ctx.fillText(`⚡射速:${weaponFireRate}`, 110, 78);
+  ctx.fillStyle = '#ff8800';
+  ctx.fillText(`🔢弹数:${weaponBulletCount + 1}`, 210, 78);
 
-  // 导弹
+  // 导弹等级
   if (missileCount > 0) {
-    ctx.fillStyle = '#fa4';
-    ctx.fillText(`导弹 威力:${missilePower} 射速:${missileFireRate} x${missileCount}`, 10, 100);
+    ctx.fillStyle = '#cc44ff';
+    ctx.fillText(`🚀 威力:${missilePower}`, 10, 100);
+    ctx.fillStyle = '#88aaff';
+    ctx.fillText(`⚡射速:${missileFireRate}`, 110, 100);
+    ctx.fillStyle = '#4488ff';
+    ctx.fillText(`🔢数量:${missileCount}`, 210, 100);
   }
 
   // 护盾指示
