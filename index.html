@@ -2216,12 +2216,21 @@ function drawLevelClear() {
   ctx.font = '22px Arial';
   ctx.fillText(`得分: ${score}`, W / 2, H / 2 + 15);
   if (level < 6 || !bossDefeated) {
-    const blink = Math.sin(frameCount * 0.05) > 0;
-    if (blink) {
-      ctx.fillText('点击进入下一关', W / 2, H / 2 + 55);
+    // 自动进入下一关倒计时（3秒 = 180帧）
+    const autoAdvanceTime = 180;
+    const remaining = Math.ceil((autoAdvanceTime - levelTransitionTimer) / 60);
+    if (levelTransitionTimer >= autoAdvanceTime) {
+      nextLevel();
+      return;
     }
+    ctx.fillText(`${remaining} 秒后自动进入下一关`, W / 2, H / 2 + 55);
   } else {
-    ctx.fillText('恭喜通关！点击返回菜单', W / 2, H / 2 + 55);
+    ctx.fillText('恭喜通关！3秒后返回菜单', W / 2, H / 2 + 55);
+    if (levelTransitionTimer >= 180) {
+      gameState = STATE.MENU;
+      return;
+    }
+  }
   }
 }
 
