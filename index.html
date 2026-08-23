@@ -1606,8 +1606,8 @@ function dropItem(x, y) {
   dropCooldown = 60;
   const r = Math.random();
   let type;
-  if (r < 0.55) {
-    // 55% 概率掉落奖励
+  if (r < 0.275) {
+    // 27.5% 概率掉落奖励
     const dropRoll = Math.random();
     if (dropRoll < 0.15) type = 'weapon_power';      // 15% - 武器威力
     else if (dropRoll < 0.27) type = 'weapon_rate';   // 12% - 武器射速
