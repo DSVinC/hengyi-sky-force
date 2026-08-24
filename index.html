@@ -1249,7 +1249,7 @@ function startGame() {
 
 function nextLevel() {
   level++;
-  if (level > 6) {
+  if (level > 10) {
     gameState = STATE.MENU;
     return;
   }
@@ -1416,6 +1416,83 @@ function getWaves() {
       }
       waves.push(wave);
     }
+  } else if (level === 7) {
+    // 第7关：虚空风暴
+    for (let w = 0; w < 11; w++) {
+      const wave = [];
+      for (let i = 0; i < 7 + w; i++) {
+        const r = Math.random();
+        let type;
+        if (r < 0.05) type = 'fighter';
+        else if (r < 0.20) type = 'bomber';
+        else if (r < 0.45) type = 'tracker';
+        else if (r < 0.75) type = 'missile_fighter';
+        else type = 'laser_fighter';
+        wave.push({
+          type: type,
+          x: 50 + Math.random() * (W - 100),
+          delay: i * 10
+        });
+      }
+      waves.push(wave);
+    }
+  } else if (level === 8) {
+    // 第8关：虫群核心
+    for (let w = 0; w < 12; w++) {
+      const wave = [];
+      for (let i = 0; i < 8 + w; i++) {
+        const r = Math.random();
+        let type;
+        if (r < 0.10) type = 'bomber';
+        else if (r < 0.35) type = 'tracker';
+        else if (r < 0.70) type = 'missile_fighter';
+        else type = 'laser_fighter';
+        wave.push({
+          type: type,
+          x: 50 + Math.random() * (W - 100),
+          delay: i * 9
+        });
+      }
+      waves.push(wave);
+    }
+  } else if (level === 9) {
+    // 第9关：最终防线
+    for (let w = 0; w < 13; w++) {
+      const wave = [];
+      for (let i = 0; i < 9 + w; i++) {
+        const r = Math.random();
+        let type;
+        if (r < 0.15) type = 'bomber';
+        else if (r < 0.40) type = 'tracker';
+        else if (r < 0.75) type = 'missile_fighter';
+        else type = 'laser_fighter';
+        wave.push({
+          type: type,
+          x: 50 + Math.random() * (W - 100),
+          delay: i * 8
+        });
+      }
+      waves.push(wave);
+    }
+  } else if (level === 10) {
+    // 第10关：最终决战（Boss关）
+    for (let w = 0; w < 14; w++) {
+      const wave = [];
+      for (let i = 0; i < 10 + w; i++) {
+        const r = Math.random();
+        let type;
+        if (r < 0.10) type = 'bomber';
+        else if (r < 0.35) type = 'tracker';
+        else if (r < 0.70) type = 'missile_fighter';
+        else type = 'laser_fighter';
+        wave.push({
+          type: type,
+          x: 50 + Math.random() * (W - 100),
+          delay: i * 7
+        });
+      }
+      waves.push(wave);
+    }
   }
   return waves;
 }
@@ -1464,8 +1541,8 @@ function spawnBoss() {
 // 玩家射击
 // 玩家射击
 function playerShoot() {
-  // 根据武器发射频率等级调整间隔：Lv0=20帧, Lv1=16帧, Lv2=12帧, Lv3=8帧
-  player.shootInterval = Math.max(8, 20 - weaponFireRate * 4);
+  // 根据武器发射频率等级调整间隔：无上限，射速可以无限快
+  player.shootInterval = Math.max(2, 20 - weaponFireRate * 4);
   player.shootTimer++;
   if (player.shootTimer < player.shootInterval) return;
   player.shootTimer = 0;
@@ -1689,7 +1766,7 @@ function update() {
       }
     } else if (enemies.length === 0 && !bossSpawned) {
       // 所有波次完成，生成 Boss（第3关）或过关
-      if (level === 3 || level === 4 || level === 6) {
+      if (level === 3 || level === 5 || level === 8 || level === 10) {
         spawnBoss();
       } else {
         gameState = STATE.LEVELCLEAR;
@@ -1937,11 +2014,11 @@ function collectItem(item) {
   spawnExplosion(item.x, item.y, 5, '#fff');
   switch (item.type) {
     case 'weapon_power':
-      if (weaponPower < 5) weaponPower++;
+      weaponPower++;
       score += 50;
       break;
     case 'weapon_rate':
-      if (weaponFireRate < 3) weaponFireRate++;
+      weaponFireRate++;
       score += 50;
       break;
     case 'weapon_count':
@@ -1949,11 +2026,11 @@ function collectItem(item) {
       score += 50;
       break;
     case 'missile_power':
-      if (missilePower < 5) missilePower++;
+      missilePower++;
       score += 40;
       break;
     case 'missile_rate':
-      if (missileFireRate < 3) missileFireRate++;
+      missileFireRate++;
       score += 40;
       break;
     case 'missile_count':
@@ -2211,11 +2288,11 @@ function drawLevelClear() {
   ctx.fillStyle = '#4f4';
   ctx.font = 'bold 36px Arial';
   ctx.textAlign = 'center';
-  ctx.fillText(level >= 6 && bossDefeated ? '🎉 胜利！' : `第 ${level} 关 通过！`, W / 2, H / 2 - 30);
+  ctx.fillText(level >= 10 && bossDefeated ? '🎉 胜利！' : `第 ${level} 关 通过！`, W / 2, H / 2 - 30);
   ctx.fillStyle = '#fff';
   ctx.font = '22px Arial';
   ctx.fillText(`得分: ${score}`, W / 2, H / 2 + 15);
-  if (level < 6 || !bossDefeated) {
+  if (level < 10 || !bossDefeated) {
     // 自动进入下一关倒计时（3秒 = 180帧）
     const autoAdvanceTime = 180;
     const remaining = Math.ceil((autoAdvanceTime - levelTransitionTimer) / 60);
