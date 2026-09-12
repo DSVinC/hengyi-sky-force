@@ -1,28 +1,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const vm = require('node:vm');
 const path = require('node:path');
-const root = path.resolve(__dirname, '..');
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const game = html.match(/<script>([\s\S]*?)<\/script>/)[1];
-const renderer = fs.readFileSync(path.join(root, 'aircraft.js'), 'utf8');
-function setup() {
-  let draws = 0, fills = 0, depth = 0;
-  const gradient = { addColorStop() {} };
-  const context = new Proxy({save(){depth++;},restore(){depth--;},drawImage(){draws++;},fill(){fills++;},
-    createLinearGradient(){return gradient;},createRadialGradient(){return gradient;}},
-    {get(t,k){return k in t ? t[k] : ()=>{};}});
-  const canvas = {style:{},getContext(){return context;},getBoundingClientRect(){return {left:0,top:0,width:480,height:800};}};
-  const button = {};
-  class Image { constructor(){this.complete=false;this.naturalWidth=0;this.naturalHeight=0;} }
-  class Audio {play(){return Promise.resolve();}pause(){} }
-  const sandbox = {Image, Audio, console, Math, innerWidth:480,innerHeight:800,
-    document:{querySelector:s=>s==='#g'?canvas:button,createElement:()=>({...canvas})},
-    addEventListener(){},requestAnimationFrame(){}};
-  vm.createContext(sandbox);vm.runInContext(renderer,sandbox);vm.runInContext(game,sandbox);
-  return {run:s=>vm.runInContext(s,sandbox),stats:()=>({draws,fills,depth})};
-}
+const {setup,root}=require('./game-harness.cjs');
 function load(s,key) {s.run(`{const a=aircraftImages.get(${JSON.stringify(key)});a.image.naturalWidth=256;a.image.naturalHeight=256;a.image.onload();}`);}
 test('22 valid PNGs match their manifest hashes and padded sizes',()=>{
   const crypto=require('node:crypto');
