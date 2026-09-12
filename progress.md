@@ -8,3 +8,7 @@ Original prompt: 改善关卡衔接；修复拾取后不发射的玩家导弹；
 - Player missiles now launch, track, retarget and deal damage; levels 1/2/3 launch corresponding volleys.
 - Level 1 scout has 1 HP and cannot fire; other first-level enemies have 2 HP. Later durability snapshots account for weapon upgrades.
 - Validation: 20 Node tests passed. In-app browser confirmed missile hit (20 to 16 HP), upgraded Boss survival after 4.2 seconds, midpoint crossfade, automatic level 2 to 3, and final results. Browser error log empty. No physical iPhone/iPad or uninterrupted ten-level playthrough performed.
+
+- Extended all ten normal-wave schedules to exactly twice their previous elapsed frame count, with twice the enemies at the same cadence.
+- Boss arsenals now rotate through 1/2/3/4 projectile types. Durability multipliers are 1/1.4/1.9/2.5, with a 35% floor over the previous spawned boss. Restart resets that floor.
+- Validation: 23 tests passed; all four bosses ran 1,200 update/render frames with balanced Canvas save/restore and 23/26/33/40 attack volleys. This revision used deterministic simulation, not a new browser playthrough.

@@ -1,5 +1,13 @@
 'use strict';
 let playerMissiles = [];
+let lastBossHealth = 0;
+// Preserve each boss signature opener, then rotate through its growing arsenal.
+function nextBossWeapon(e) {
+  const arsenal = {1:[1],2:[2,1],3:[3,1,2],4:[4,3,2,5]}[e.v] || [1];
+  const turn = e.weaponTurn || 0;
+  e.weaponTurn = turn + 1;
+  return arsenal[turn % arsenal.length];
+}
 const PLAYER_MISSILE_INTERVAL = 90;
 function playerMissileDamage() { return Math.max(4, wp * 3); }
 function weaponDps(laneCoverage = 1, missileCoverage = 1) {
@@ -17,7 +25,9 @@ function bossDurability() {
   const reference = 60 / 17;
   const scaled = reference * Math.pow(Math.max(1, weaponDps(.85) / reference), .9);
   // At least eight seconds of theoretical maximum sustained fire at spawn.
-  return Math.ceil(Math.max(90 + level * 4, weaponDps() * 8, scaled * (20 + level)));
+  const rank = Math.max(0, [3,5,8,10].indexOf(level));
+  const strength = [1,1.4,1.9,2.5][rank];
+  return Math.ceil(Math.max(lastBossHealth * 1.35, strength * Math.max(90 + level * 4, weaponDps() * 8, scaled * (20 + level))));
 }
 function missileTargets() {
   return enemies.filter(e => e.hp > 0 && e.y >= 0 && e.y <= H);
