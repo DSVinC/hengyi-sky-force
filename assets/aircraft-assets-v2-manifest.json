@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "source_directory": "/mnt/data/aircraft_assets_v2/",
+  "source_png_count": 22,
+  "source_png_total_bytes": 2127528,
+  "source_pngs": [
+    {"file":"bomber.png","bytes":75249,"sha256":"5ecd1d2e88cfce28e87056b52a4cc4d5bb3ed7ed729acd96eb4376523651eb08"},
+    {"file":"boss-10.png","bytes":283834,"sha256":"154b48f4337ee993a35957922642c91413d6fe6e289a871fd347a720c03764e4"},
+    {"file":"boss-3.png","bytes":195404,"sha256":"d042b9a3aee7626994e1e21f9edfd669a8b51966011a279ef669ed67a778da41"},
+    {"file":"boss-5.png","bytes":224015,"sha256":"a524d5671e42dfbb84ee50787b525a3245980cfd1033e39f1ab2a474bc0121b1"},
+    {"file":"boss-8.png","bytes":260795,"sha256":"20a6e377f39a7e56063bb239fb9b67e7e6771f31bc9503df494889c36539093d"},
+    {"file":"elite.png","bytes":54697,"sha256":"ede335f575350223c36fa9cec2fb55b00f860478d7dbafeb4ecf83e281071eb6"},
+    {"file":"gunship-elite.png","bytes":76413,"sha256":"5e84e2ffb6232eb291e5a8d2b80d049e1469fdf64217c5ad7e39dcfcb2570aa9"},
+    {"file":"gunship.png","bytes":67701,"sha256":"e3891055f68ad974c7c990977922f6d742558a87c12b1c5fdd17b2e28b2813b5"},
+    {"file":"heavy-elite.png","bytes":94590,"sha256":"e28bb78480bcd30b0d597cc261c224c6e9fea0fb2533c51ec7eda079eea6bebd"},
+    {"file":"heavy.png","bytes":93066,"sha256":"a6923379e0d1c93f41ab75b85600fea0c1040f9f50c870f81f54d8ce2503cf5b"},
+    {"file":"interceptor.png","bytes":46284,"sha256":"d1c7dc832d5cd923081f7db505dc72853bef75e8bc3c4bb34081803f0d4b13b5"},
+    {"file":"laser-elite.png","bytes":61463,"sha256":"79984f100f0633b306b40ebb34cb0ee3d13032230dba696fd3c21f5886fda7fc"},
+    {"file":"laser.png","bytes":49562,"sha256":"bf6cea13e6058dd270167ff5f12345313670735372ae89aa0414e3c2802b5209"},
+    {"file":"missile-elite.png","bytes":75803,"sha256":"390a20195711dc0fb4e5e101a97389cb1b2d8234d5300c7721074e1c113e5aee"},
+    {"file":"missile.png","bytes":41997,"sha256":"cd8906b2cf0839d8d0b9cd5399ee506cb536dcc3495298d8dd9de395a88ad724"},
+    {"file":"phantom.png","bytes":64319,"sha256":"3a7da8f05887c39a4382bb6213621bc03fff1d9b17e36370942841a85b27a28a"},
+    {"file":"plasma-elite.png","bytes":69032,"sha256":"1dc357734757aae0f552bb4d809b26fef9d9d10ef8275d2bb611d3c61432ace8"},
+    {"file":"plasma.png","bytes":75757,"sha256":"9aa0e393cfa236a02efa7502af3dc83696d384eba1823d45239fcdc7e7dd918c"},
+    {"file":"player-1.png","bytes":52804,"sha256":"4368808f0f2a9d9f1128e7ec129cd9fcdfa6ef8becb1c4d1c9458b21d1d8ebc3"},
+    {"file":"player-2.png","bytes":56482,"sha256":"21608a39131af12918bda4865cbd0c377193a26e156e0db5d57294365def0b65"},
+    {"file":"player-3.png","bytes":66858,"sha256":"37511f3f6d6d9225fc58dca0429e7d52cef5d3e5bc8801606fa1122e787b51f8"},
+    {"file":"scout.png","bytes":41403,"sha256":"767823ca09921d89a05b21d4670fc06c791de12b97d71eaadb7a8a23ef631b15"}
+  ],
+  "source_zip": {
+    "file":"aircraft-assets-v2.zip",
+    "bytes":2129744,
+    "sha256":"90af0f5bb71017d884bd77d76a84fd02e83e702b3a2a1dbbefae9a1fdc120f49"
+  },
+  "atlas": {
+    "decoded_file":"aircraft-atlas.webp",
+    "decoded_bytes":107160,
+    "decoded_sha256":"bf3a8c9c53daec35803c9179335ed66c9edfe4400c9bfccc9347826e0189a8f1",
+    "base64_parts_in_order":[
+      "aircraft-atlas-0.txt",
+      "aircraft-atlas-1.txt",
+      "aircraft-atlas-2.txt",
+      "aircraft-atlas-3.txt",
+      "aircraft-atlas-4.txt",
+      "aircraft-atlas-5.txt",
+      "aircraft-atlas-6.txt",
+      "aircraft-atlas-7.txt"
+    ],
+    "part_git_blob_shas":[
+      "819e243a08b8b894de1c43ebc8b6cede192e260d",
+      "0f4d1207c49d70f117ef04d50a8bec3196b32e62",
+      "032f5ecdcbab1c039a96c588e5c646f8c1a7622c",
+      "82bde468bcefb22d4e8757301721e2b4bbebff75",
+      "cc88ba72313b32d4dff5c8dd34899648dd48fd30",
+      "32064897a5700ed1656fcc7489265e354e038d29",
+      "58c8b3599276a2ee816a371e45b019d763ae664e",
+      "4fc70eaad5886a4641b5ea6a5dce2c887d9e7b85"
+    ],
+    "reconstruct":"cat assets/aircraft-atlas-{0..7}.txt | tr -d '\\n' | base64 -d > assets/aircraft-atlas.webp"
+  },
+  "notes":"The 22 source PNGs were verified locally. The repository text-safe recovery asset currently present is the complete aircraft-atlas.webp encoded across parts 0-7. This manifest records the canonical PNG hashes and ZIP hash for lossless provenance verification."
+}
