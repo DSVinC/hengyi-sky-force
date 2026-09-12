@@ -116,7 +116,7 @@ const aircraftImages = new Map();
 const aircraftHealth = new WeakMap();
 for (const key of Object.keys(aircraftCatalog)) {
   const image = new Image();
-  const asset = { image, ready: false, flash: null };
+  const asset = { image, ready: false, failed: false, flash: null };
   aircraftImages.set(key, asset);
   image.onload = () => {
     if (!image.naturalWidth || !image.naturalHeight) return;
@@ -132,7 +132,7 @@ for (const key of Object.keys(aircraftCatalog)) {
     asset.flash = flash;
     asset.ready = true;
   };
-  image.onerror = () => { asset.ready = false; };
+  image.onerror = () => { asset.ready = false; asset.failed = true; };
   image.src = 'assets/aircraft/' + key + '.png';
 }
 
