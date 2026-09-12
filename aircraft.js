@@ -202,8 +202,6 @@ function drawAircraft(e, key, maxWidth, maxHeight, isPlayer = false) {
   x.save();
   x.translate(e.x, e.y);
   shadow(w * .55);
-  x.rotate(e.bank || 0);
-  x.scale(1 - Math.min(.13, Math.abs(e.bank || 0) * .25), 1);
   // All source noses point up; incoming aircraft face their direction of travel.
   if (!isPlayer) x.rotate(Math.PI);
   aircraftFlames(w, h, color, e.ph || 0, large);

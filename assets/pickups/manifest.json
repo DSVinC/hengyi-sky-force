@@ -1,0 +1,41 @@
+{
+  "source": "Built-in imagegen pickup atlas and silhouette matte",
+  "sprites": {
+    "power": {
+      "size": 192,
+      "bodyWidth": 123,
+      "bodyHeight": 168,
+      "sha256": "ced13bb52a6be6d8032d1ad3684cb0bb52248c654e0dacaed6729da499cef9d9"
+    },
+    "rate": {
+      "size": 192,
+      "bodyWidth": 135,
+      "bodyHeight": 168,
+      "sha256": "4c243102f7eda7918f921b9bcab043b26dfd7884475fa0850b3016e9e64e3b6f"
+    },
+    "count": {
+      "size": 192,
+      "bodyWidth": 168,
+      "bodyHeight": 155,
+      "sha256": "709e51bd6c26eaffb7d546f5e59ce4293f8b5bf0a944a2f99753e231728881c6"
+    },
+    "missile": {
+      "size": 192,
+      "bodyWidth": 166,
+      "bodyHeight": 168,
+      "sha256": "b3a7ea0ae808f5d74829bbdacfd29fa1129ea5f00aa46a687b942e393a8e22e0"
+    },
+    "shield": {
+      "size": 192,
+      "bodyWidth": 151,
+      "bodyHeight": 168,
+      "sha256": "224cff0d89d28609d168833f7123a9b74c1fe76064e073b219a8e5c15e2fd839"
+    },
+    "life": {
+      "size": 192,
+      "bodyWidth": 117,
+      "bodyHeight": 168,
+      "sha256": "8f5814e14077e68627f080db9fa2d2435f19b1e397f75fa9a69802823bdcceb3"
+    }
+  }
+}
