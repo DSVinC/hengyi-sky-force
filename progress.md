@@ -12,3 +12,6 @@ Original prompt: 改善关卡衔接；修复拾取后不发射的玩家导弹；
 - Extended all ten normal-wave schedules to exactly twice their previous elapsed frame count, with twice the enemies at the same cadence.
 - Boss arsenals now rotate through 1/2/3/4 projectile types. Durability multipliers are 1/1.4/1.9/2.5, with a 35% floor over the previous spawned boss. Restart resets that floor.
 - Validation: 23 tests passed; all four bosses ran 1,200 update/render frames with balanced Canvas save/restore and 23/26/33/40 attack volleys. This revision used deterministic simulation, not a new browser playthrough.
+
+- Fixed initial old-art flash: a dedicated loading screen gates opening render and start input until player-1 and background are ready. Explicit failures or a 10-second timeout release the gate to existing fallback art.
+- Validation: 26 deterministic tests pass, including pending/no-fallback, both assets ready, explicit failure, and stalled loading. No new browser acceptance claimed for this patch.
