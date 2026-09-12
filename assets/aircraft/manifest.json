@@ -1,0 +1,142 @@
+{
+  "source": "User supplied aircraft sheet, 2026-09-12",
+  "processing": "Original RGB with imagegen silhouette mask; centered alpha bounds; proportional sizing",
+  "anchor": [
+    0.5,
+    0.5
+  ],
+  "sprites": {
+    "player-1": {
+      "size": 256,
+      "bodyWidth": 208,
+      "bodyHeight": 224,
+      "sha256": "5236784180f559de894c78ddf3f9d8ee3f75ed563ed80cac90d782dd4a08a125"
+    },
+    "player-2": {
+      "size": 256,
+      "bodyWidth": 186,
+      "bodyHeight": 224,
+      "sha256": "e903a2338eba1836b66b0ebf2e11952ff026fc2c1375f4f6e6988f4c5eeb08b1"
+    },
+    "player-3": {
+      "size": 256,
+      "bodyWidth": 197,
+      "bodyHeight": 224,
+      "sha256": "37b30e84cc76c4ae5a04f007cd57e9a324756274628589d6e4a66c0cc4aed5ae"
+    },
+    "scout": {
+      "size": 256,
+      "bodyWidth": 145,
+      "bodyHeight": 224,
+      "sha256": "2182fdc2a4bc006b154d2d62fd8eff2b552cde908185cb36b68ad69e03c80dfe"
+    },
+    "interceptor": {
+      "size": 256,
+      "bodyWidth": 224,
+      "bodyHeight": 219,
+      "sha256": "a11867ad51865216f863eab94246141421f9a2ccaf8802e3f6cbf30357ce22f0"
+    },
+    "bomber": {
+      "size": 256,
+      "bodyWidth": 217,
+      "bodyHeight": 224,
+      "sha256": "778b19f4603af0a355bf3d30b2f1dbf69ab42e5d53eb0319ef3e53265d5b0434"
+    },
+    "missile": {
+      "size": 256,
+      "bodyWidth": 182,
+      "bodyHeight": 224,
+      "sha256": "da824790a23b11d060d851d372c6eec1bb5521b721d5d718cfb53fb9280b88ba"
+    },
+    "laser-elite": {
+      "size": 256,
+      "bodyWidth": 169,
+      "bodyHeight": 224,
+      "sha256": "b375da9b90905332e92387826e732f32e1698e8273c326c0c32b0189d74d9f32"
+    },
+    "gunship": {
+      "size": 256,
+      "bodyWidth": 199,
+      "bodyHeight": 224,
+      "sha256": "8d50b8fd0a7b97f95f45833f64bb7d07b5f3f531f2206119fd9c59bcad020e30"
+    },
+    "laser": {
+      "size": 256,
+      "bodyWidth": 168,
+      "bodyHeight": 224,
+      "sha256": "e89899370aff0d1b37b023f11cb78d469165b7b6abed32880d752fbea0e6a335"
+    },
+    "heavy": {
+      "size": 256,
+      "bodyWidth": 171,
+      "bodyHeight": 224,
+      "sha256": "66786ec5662a84232e6faba48c938b08bffcee5569a4348a31c71a0c74972c9e"
+    },
+    "plasma": {
+      "size": 256,
+      "bodyWidth": 166,
+      "bodyHeight": 224,
+      "sha256": "2d8f3ac4e73f100ab696b06ac874e585c7ae261d20d2c5f1af63dc9147e42d9d"
+    },
+    "phantom": {
+      "size": 256,
+      "bodyWidth": 181,
+      "bodyHeight": 224,
+      "sha256": "f75a3236a47c13f3395f659b31d22d85c4a57fd634c70f0033fa5aadf5a76e43"
+    },
+    "plasma-elite": {
+      "size": 256,
+      "bodyWidth": 168,
+      "bodyHeight": 224,
+      "sha256": "b8e7fc712deef3d3992c3eea13558161aa299fb75a50ad66e93722b1b587fed4"
+    },
+    "gunship-elite": {
+      "size": 256,
+      "bodyWidth": 203,
+      "bodyHeight": 224,
+      "sha256": "69c73151059a990f95e1d6ce7018fae14e648ff492cea47bcd3bfde212240f16"
+    },
+    "elite": {
+      "size": 256,
+      "bodyWidth": 176,
+      "bodyHeight": 224,
+      "sha256": "4c6edf2a128a64bb3ad306c07cd882c722b8bc256bd3ecc358526bdc37f2c14c"
+    },
+    "missile-elite": {
+      "size": 256,
+      "bodyWidth": 156,
+      "bodyHeight": 224,
+      "sha256": "54a8f9a561779166e0ffcb39a64b838000ed0f22894488d1d3459403d9546415"
+    },
+    "heavy-elite": {
+      "size": 256,
+      "bodyWidth": 162,
+      "bodyHeight": 224,
+      "sha256": "3fefb9172d47c5209afb20477100d12469d80313b36f1070f2cebbb5690d40c9"
+    },
+    "boss-3": {
+      "size": 512,
+      "bodyWidth": 448,
+      "bodyHeight": 385,
+      "sha256": "811f792561fc1bf31687c25163999c29e4f739d1030206c97a4a2d83af666b50"
+    },
+    "boss-5": {
+      "size": 512,
+      "bodyWidth": 448,
+      "bodyHeight": 364,
+      "sha256": "089925a185dce86d61cf13d3a2cac82e126dc7df4a5c00ca5164a427dd50b0b5"
+    },
+    "boss-8": {
+      "size": 512,
+      "bodyWidth": 448,
+      "bodyHeight": 328,
+      "sha256": "a6fc9a9c4f43ad058998a0211d8ba936b5b3e98f69f81694314be23567b5bb90"
+    },
+    "boss-10": {
+      "size": 512,
+      "bodyWidth": 448,
+      "bodyHeight": 364,
+      "sha256": "636a0d9c12b2af6f3e11e7e8fe860ff5f645c42847fd341656cd73d8234ba25f"
+    }
+  }
+}
