@@ -1,12 +1,73 @@
 'use strict';
 let playerMissiles = [];
 let lastBossHealth = 0;
-// Preserve each boss signature opener, then rotate through its growing arsenal.
+// Each boss keeps its signature opener, but even the first has three weapons.
+// 1: plasma fan; 2: homing missiles; 3: laser bolts; 4: radial plasma; 5: heavy guns.
+const BOSS_ARSENALS = {1:[1,2,5],2:[2,5,3,1],3:[3,1,2,5],4:[4,3,2,5,1]};
 function nextBossWeapon(e) {
-  const arsenal = {1:[1],2:[2,1],3:[3,1,2],4:[4,3,2,5]}[e.v] || [1];
+  const arsenal = BOSS_ARSENALS[e.v] || BOSS_ARSENALS[1];
   const turn = e.weaponTurn || 0;
   e.weaponTurn = turn + 1;
   return arsenal[turn % arsenal.length];
+}
+function fireBossSalvo(e) {
+  if (e.hp <= 0 || e.canFire === false) return;
+  const primary = nextBossWeapon(e);
+  const arsenal = BOSS_ARSENALS[e.v] || BOSS_ARSENALS[1];
+  const enraged = e.hp / e.max < .45;
+  fireBossWeapon(e, primary, false);
+  e.lastWeapons = [primary];
+  // Alternate a single volley with a main/support combination. Low health
+  // activates the support mount each turn, not every weapon simultaneously.
+  if (e.weaponTurn % 2 === 0 || enraged) {
+    const secondary = arsenal[e.weaponTurn % arsenal.length];
+    fireBossWeapon(e, secondary, true);
+    e.lastWeapons.push(secondary);
+  }
+  // Mixed salvos need breathing room; do not double the old projectile density.
+  const interval = [76,70,64,58][(e.v || 1) - 1] || 76;
+  e.rate = Math.round(interval * (enraged ? .9 : 1));
+}
+function fireBossWeapon(e, weapon, support) {
+  const enraged = e.hp / e.max < .45;
+  const sx = e.x + (support ? (e.weaponTurn % 2 ? -34 : 34) : 0);
+  const sy = e.y + (support ? 18 : 32);
+  const emit = (vx, vy, r, kind, extra = {}) => {
+    eb.push({x:sx,y:sy,vx,vy,r,kind,l:260,...extra});
+  };
+  if (weapon === 1) {
+    const count = support ? 3 : enraged ? 7 : 5;
+    const aim = C(Math.atan2(p.y - sy, p.x - sx), Math.PI * .28, Math.PI * .72);
+    for (let i = 0; i < count; i++) {
+      const angle = aim + (i - (count - 1) / 2) * .19;
+      emit(Math.cos(angle) * 3.7, Math.sin(angle) * 3.7, 4, 'plasma');
+    }
+  } else if (weapon === 2) {
+    const count = support ? 1 : 3, speed = enemyMissileSpeed();
+    for (let i = 0; i < count; i++) {
+      const offset = i - (count - 1) / 2, vx = offset * .45;
+      emit(vx, Math.sqrt(speed * speed - vx * vx), 5, 'missile',
+        {x:sx + offset * 20,track:1,sp:speed,l:Math.ceil((e.v === 4 ? 880 : 735) / speed)});
+    }
+  } else if (weapon === 3) {
+    for (const offset of (support ? [0] : [-24,24])) {
+      emit(0, 8.3, 5, 'laser', {x:sx + offset,l:100});
+    }
+  } else if (weapon === 4) {
+    const count = support ? 5 : enraged ? 11 : 9;
+    for (let i = 0; i < count; i++) {
+      const angle = frame * .025 + i * T / count;
+      const track = !support && i % 3 === 0, speed = track ? enemyMissileSpeed() : 3.9;
+      emit(Math.cos(angle) * speed, Math.sin(angle) * speed, 4.5, track ? 'missile' : 'plasma',
+        {track:track ? 1 : 0,sp:speed,l:track ? Math.ceil(880 / speed) : 220});
+    }
+  } else if (weapon === 5) {
+    const count = support ? 2 : 3;
+    for (let i = 0; i < count; i++) {
+      const offset = i - (count - 1) / 2;
+      emit(offset * 1.1, 3, 6, 'heavy', {x:sx + offset * 14});
+    }
+  }
 }
 const PLAYER_MISSILE_INTERVAL = 90;
 function playerMissileDamage() { return Math.max(4, wp * 3); }
