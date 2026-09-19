@@ -1,4 +1,13 @@
 'use strict';
+// Repeat the CURRENT release's complete timed wave block twice. Repeating
+// its opening delay too makes the spawn schedule exactly 2x, not just its count.
+const STAGE_REPETITIONS = 2;
+function stageEnemyCount(stage) { return STAGE_REPETITIONS * 2 * (8 + stage * 4); }
+function stageSpawnDelay(stage, remaining) {
+  const blockSize = 2 * (8 + stage * 4);
+  const interval = Math.max(18, 58 - stage * 3);
+  return remaining % blockSize === 0 ? 80 - interval : interval;
+}
 let stageTransition = null;
 const stageNames=['地球近轨道','小行星带','红色前哨基地','空间站外围','虚空裂隙','战损舰队','离子风暴','虫群母巢','最终防线','最终决战'];
 const reduceStageMotion = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
